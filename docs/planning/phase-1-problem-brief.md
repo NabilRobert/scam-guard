@@ -108,7 +108,7 @@ Settled with Arthur, 2026-11-03:
 3. **Libraries:** tldextract, rapidfuzz, PyYAML (ADR-011).
 4. **Name:** placeholder "Orang Baik AI" (ADR-015).
 
-Everything else in Phase 5 is a recommendation until Arthur agrees. The open questions are at the end of
+Arthur accepted the other ADRs in Phase 5 as recommended, the same day. The open questions are at the end of
 [Phase 5](phase-5-architecture-decisions.md#open-questions).
 
 ## Cost of doing nothing

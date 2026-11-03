@@ -1,7 +1,8 @@
 # Phase 5: Architecture Decisions
 
-Short ADRs, 2026-11-03. **None is settled yet:** each is a recommendation
-until Arthur agrees. Settled ones will be marked with the date. The summary
+Short ADRs, 2026-11-03. **All are decided:** ADRs 002, 010, 011 and 015
+were settled with Arthur one by one; he accepted the rest as recommended
+the same day. WhatsApp's terms and the model budget stay open. The summary
 table, the first slice and the open questions are at the end.
 
 ```
@@ -330,22 +331,22 @@ real-data gate; one independent review before the gate.
 
 | # | Decision | Rejected | Status |
 |---|---|---|---|
-| 001 | Arthur's family, up to 10, by invitation | Public; Arthur only | Recommended |
+| 001 | Arthur's family, up to 10, by invitation | Public; Arthur only | **Accepted 2026-11-03** |
 | 002 | WAHA with GOWS behind Project 9's adapter; alerts the one bot-started message | Meta's Cloud API (recommended), Telegram, Twilio, web form | **Settled 2026-11-03** |
-| 003 | Depend on Project 9's channel, split out by its session | Copying it, a new channel | Recommended |
-| 004 | Three levels, never "safe"; fixed wording pointing to the bank and IASC | Scores, two levels, "probably safe" | Recommended |
-| 005 | Never visit links or open files; unknown is TINGGI | Sandboxes, HEAD requests, VirusTotal uploads | Recommended |
-| 006 | URLhaus, MalwareBazaar, Phishing.Database, Safe Browsing update API; PhishTank and OpenPhish after spike 2 | VirusTotal, scraping cekrekening.id | Recommended |
-| 007 | Model off in v1; fallback may only raise | Model first, model that lowers, local model | Recommended |
-| 008 | Store no content; ratings as ids and hashes | Keeping messages | Recommended |
-| 009 | Two-sided consent; alerts with no content; capped | Sharing content, SEDANG alerts, self-linking | Recommended |
+| 003 | Depend on Project 9's channel, split out by its session | Copying it, a new channel | **Accepted 2026-11-03** |
+| 004 | Three levels, never "safe"; fixed wording pointing to the bank and IASC | Scores, two levels, "probably safe" | **Accepted 2026-11-03** |
+| 005 | Never visit links or open files; unknown is TINGGI | Sandboxes, HEAD requests, VirusTotal uploads | **Accepted 2026-11-03** |
+| 006 | URLhaus, MalwareBazaar, Phishing.Database, Safe Browsing update API; PhishTank and OpenPhish after spike 2 | VirusTotal, scraping cekrekening.id | **Accepted 2026-11-03** |
+| 007 | Model off in v1; fallback may only raise | Model first, model that lowers, local model | **Accepted 2026-11-03** |
+| 008 | Store no content; ratings as ids and hashes | Keeping messages | **Accepted 2026-11-03** |
+| 009 | Two-sided consent; alerts with no content; capped | Sharing content, SEDANG alerts, self-linking | **Accepted 2026-11-03** |
 | 010 | Measurement plan before any rule; private real set, written set kept apart | Hand-written or public set only | **Settled 2026-11-03** |
 | 011 | Project 9's stack plus tldextract, rapidfuzz, PyYAML | A detection SaaS | **Settled 2026-11-03** |
-| 012 | $0 until approved; model cap $1 a month | No cap | Recommended |
-| 013 | Screenshots in slice 7; voice after a spike | Cloud OCR or speech | Recommended |
-| 014 | Portfolio and family first | Designing for banks now | Recommended |
+| 012 | $0 until approved; model cap $1 a month | No cap | **Accepted 2026-11-03** |
+| 013 | Screenshots in slice 7; voice after a spike | Cloud OCR or speech | **Accepted 2026-11-03** |
+| 014 | Portfolio and family first | Designing for banks now | **Accepted 2026-11-03** |
 | 015 | Repo `scam-guard`; shown name "Orang Baik AI" (placeholder) | "Cek Dulu" | **Settled 2026-11-03** (placeholder) |
-| 016 | Security first, as Project 9's ADR-020 | — | Recommended |
+| 016 | Security first, as Project 9's ADR-020 | — | **Accepted 2026-11-03** |
 
 ## The first slice
 
@@ -364,8 +365,7 @@ downloads. See the [slice plan](slice-plan.md).
 5. ~~New libraries~~: settled, all three.
 6. ~~Name~~: placeholder "Orang Baik AI".
 7. **Model budget (ADR-012):** later, after the baseline.
-8. **The other recommended ADRs** (001, 003–009, 012–014, 016): accept as
-   recommended?
+8. ~~The other ADRs~~: accepted as recommended.
 9. **WhatsApp's terms:** accept breaking them for real use, as Project 9's
    open question 1? Slices 0 to 5 are safe to build either way.
 
