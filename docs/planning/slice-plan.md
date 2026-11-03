@@ -5,7 +5,7 @@
 | # | Prerequisite | Needed for | Who |
 |---|---|---|---|
 | P1 | Arthur OKs Phases 1, 2 and 5 and the measurement plan | Slice 0 | Arthur |
-| P2 | Answers to the open questions on the real set, the second labeller and donations | Slice 0 | Arthur |
+| P2 | Arthur's received messages and the scams he finds online, each with its source; a family member's time for `label_b` | Slice 0 | Arthur |
 | P3 | The GitHub repo exists | Pushing anything | Arthur |
 | P4 | Free keys: abuse.ch Auth-Key, Google Safe Browsing | Slice 2 | Arthur |
 | P5 | Project 9's channel split into a package, by Project 9's session | Slice 3 | Project 9 |
@@ -30,7 +30,7 @@ rules. Each new test is mutation-checked once. Each slice updates
 
 | Slice | Delivers | Done when | Cost |
 |---|---|---|---|
-| **0. The set** | Repo scaffold (README, CI, complexity rules); the source register; the collection and redaction scripts; the label guide; the public paraphrased set | About 200 scam and 200 normal real rows labelled twice, kappa reported, held-out split frozen and fingerprinted | $0 |
+| **0. The set** | Repo scaffold (README, CI, complexity rules); the source register; the collection and redaction scripts; the label guide; the written set (by Claude) | About 200 scam and 200 normal real rows labelled twice, kappa reported, held-out split frozen and fingerprinted | $0 |
 | **1. Rules baseline (B0)** | Text rules (YAML); link shape checks; file-type rules; the combining rule; the scorer; `docs/accuracy.md` | Held-out scored once; catch and false-alarm rates with intervals published; G3 and G4 tests pass | $0 |
 | **2. Lists (B1)** | Fetch job and local cache for URLhaus, MalwareBazaar, Phishing.Database, Safe Browsing update API; stale-cache fail-closed; file hashing without parsing | B1 scored on the same held-out set with a dated snapshot; no lookup touches the network per message | $0 |
 | **3. Channel** | Project 9's channel as a dependency, on WAHA; consent; reply wording; `bantuan`; `hapus data saya` | Signed fixtures cover every path; one live round trip on the spare number with invented messages; no-content tests pass | $0 |
@@ -46,9 +46,8 @@ rules. Each new test is mutation-checked once. Each slice updates
 
 **Slices 0 and 1 together, $0, local, no network per message.**
 
-Slice 0 needs Arthur's answers on the real set before collection starts.
-Until then, only the scaffold, the scripts, the label guide and the public
-paraphrased set can be built.
+Slice 0's sources are settled. The scaffold, scripts, label guide and
+written set can start at once; the real rows arrive as Arthur sends them.
 
 Slice 1 is done when:
 - `uv run pytest` passes, including V1 (no "safe" wording) and K4 (no

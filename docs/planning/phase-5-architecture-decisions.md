@@ -248,22 +248,25 @@ keep it a safety net.
 person's privacy. *Alerts on SEDANG:* too many, and people stop reading.
 *Relatives linking themselves:* surveillance.
 
-## ADR-010: Measurement first
+## ADR-010: Measurement first (settled)
 
-**Recommendation:** the [measurement plan](measurement-plan.md), in full,
+**Decision (settled by Arthur, 2026-11-03):** the [measurement plan](measurement-plan.md), in full,
 before any rule: a real set of about 200 scam and 200 normal messages, two
 labellers, a held-out split scored once per version, and a rules-only
-baseline at $0. Targets are set from the baseline.
+baseline at $0. Targets are set from the baseline. Arthur settled the
+sources: private in `data/real/`; the unlicensed SMS datasets privately;
+messages he received and scams he finds online; messages Claude writes,
+kept apart from the real set; a family member as second labeller.
 
 **Rejected:** *a hand-written set only:* it matches how the writer thinks
 scams look. *A public dataset only:* none is real, Indonesian and licensed.
 
-## ADR-011: Stack and libraries
+## ADR-011: Stack and libraries (settled)
 
-**Recommendation:** Arthur's stack, as in Project 9: Python 3.12, FastAPI,
+**Decision (libraries settled by Arthur, 2026-11-03):** Arthur's stack, as in Project 9: Python 3.12, FastAPI,
 Pydantic, SQLAlchemy 2 with Alembic, Typer, pytest, uv, ruff and pyright,
 Postgres, httpx, tenacity, the OpenTelemetry SDK, Inspect AI. **New
-libraries, each needing Arthur's OK:**
+libraries, approved:**
 
 | Library | For | Licence | Beat |
 |---|---|---|---|
@@ -305,12 +308,16 @@ with a bank or telco, only after the baseline shows it beats doing nothing.
 A sale changes the lists (commercial terms), the hosting and the legal
 read, so each is listed as a gate, not designed now.
 
-## ADR-015: The name
+## ADR-015: The name (placeholder settled)
 
-**Recommendation:** keep `scam-guard` for the repo. For the name people
-see in WhatsApp, **"Cek Dulu"** ("check first"): Indonesian, says what to
-do, and is an everyday phrase, so it's easy to remember. Risk: a common
-phrase is hard to own, and others may already use it (not checked). Arthur decides.
+**Decision (Arthur, 2026-11-03):** the repo stays `scam-guard`; the shown
+name is the placeholder **"Orang Baik AI"** until a final one is chosen.
+
+**To weigh before it's final:** v1 has no model, so "AI" describes a
+fallback that is off. And a name that sounds like a trusted helper is
+what scammers copy, so the notice must say how to tell the real one.
+
+**Rejected:** *"Cek Dulu"* (the recommendation).
 
 ## ADR-016: Security comes first
 
@@ -332,12 +339,12 @@ real-data gate; one independent review before the gate.
 | 007 | Model off in v1; fallback may only raise | Model first, model that lowers, local model | Recommended |
 | 008 | Store no content; ratings as ids and hashes | Keeping messages | Recommended |
 | 009 | Two-sided consent; alerts with no content; capped | Sharing content, SEDANG alerts, self-linking | Recommended |
-| 010 | Measurement plan before any rule | Hand-written or public set only | Recommended |
-| 011 | Project 9's stack plus tldextract, rapidfuzz, PyYAML | A detection SaaS | Recommended |
+| 010 | Measurement plan before any rule; private real set, written set kept apart | Hand-written or public set only | **Settled 2026-11-03** |
+| 011 | Project 9's stack plus tldextract, rapidfuzz, PyYAML | A detection SaaS | **Settled 2026-11-03** |
 | 012 | $0 until approved; model cap $1 a month | No cap | Recommended |
 | 013 | Screenshots in slice 7; voice after a spike | Cloud OCR or speech | Recommended |
 | 014 | Portfolio and family first | Designing for banks now | Recommended |
-| 015 | Repo `scam-guard`; shown name "Cek Dulu" | — | Recommended |
+| 015 | Repo `scam-guard`; shown name "Orang Baik AI" (placeholder) | "Cek Dulu" | **Settled 2026-11-03** (placeholder) |
 | 016 | Security first, as Project 9's ADR-020 | — | Recommended |
 
 ## The first slice
@@ -350,14 +357,17 @@ downloads. See the [slice plan](slice-plan.md).
 
 **For Arthur, one at a time:**
 1. ~~**Channel (ADR-002)**~~: settled 2026-11-03, WAHA.
-2. **The real set:** OK to keep real messages private in `data/real/`, and
-   to use the two unlicensed SMS datasets privately?
-3. **Second labeller:** who labels `label_b`?
-4. **Donations:** will Arthur's family donate real scams and real normal
-   messages, with consent?
-5. **New libraries (ADR-011):** tldextract, rapidfuzz, PyYAML?
-6. **Name (ADR-015).**
+2. ~~The real set~~: settled, private in `data/real/`, both SMS datasets privately.
+3. ~~Second labeller~~: settled, a family member.
+4. ~~Donations~~: settled, Arthur's own messages, scams he finds online, and
+   messages Claude writes, kept apart.
+5. ~~New libraries~~: settled, all three.
+6. ~~Name~~: placeholder "Orang Baik AI".
 7. **Model budget (ADR-012):** later, after the baseline.
+8. **The other recommended ADRs** (001, 003–009, 012–014, 016): accept as
+   recommended?
+9. **WhatsApp's terms:** accept breaking them for real use, as Project 9's
+   open question 1? Slices 0 to 5 are safe to build either way.
 
 **For the spikes:** whether WAHA's GOWS payload carries a file's SHA-256;
 abuse.ch list sizes and per-hash lookup; PhishTank, OpenPhish and Tranco

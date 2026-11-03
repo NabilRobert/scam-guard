@@ -7,8 +7,8 @@ family member forwards something high-risk, a relative they linked is told.
 It is the twelfth portfolio piece, built after Project 9 and on its
 WhatsApp base.
 
-The working name is the repo's, `scam-guard`. A better public name is an
-open question (Phase 5, ADR-015).
+The repo is `scam-guard`. The name shown in WhatsApp is the placeholder
+"Orang Baik AI" (ADR-015).
 
 **Measurement comes first.** Before any rule is written, the
 [measurement plan](measurement-plan.md) fixes the labelled set, the
@@ -100,6 +100,13 @@ Settled with Arthur, 2026-11-03:
 
 1. **Channel:** WAHA, as in Project 9 (ADR-002). The recommendation was
    Meta's Cloud API; the risk accepted is recorded there.
+
+2. **The labelled set:** real messages private in `data/real/`; the two
+   unlicensed SMS datasets privately; Arthur's own messages and scams he
+   finds online, plus messages Claude writes, kept apart; a family member
+   as second labeller (ADR-010).
+3. **Libraries:** tldextract, rapidfuzz, PyYAML (ADR-011).
+4. **Name:** placeholder "Orang Baik AI" (ADR-015).
 
 Everything else in Phase 5 is a recommendation until Arthur agrees. The open questions are at the end of
 [Phase 5](phase-5-architecture-decisions.md#open-questions).
