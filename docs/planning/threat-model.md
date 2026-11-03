@@ -26,7 +26,7 @@ findings, no real messages.
 
 | Party | Wants | The limit we can set |
 |---|---|---|
-| **A scammer** | A `RENDAH` on their message; the guard banned or discredited | Rules that only raise; unknown is `TINGGI`; the official channel (ADR-002) |
+| **A scammer** | A `RENDAH` on their message; the guard banned or discredited | Rules that only raise; unknown is `TINGGI`; a spare number ready (ADR-002) |
 | **A scammer impersonating the guard** | "the guard checked it, it's safe" | The guard never says safe and never contacts first, and the notice tells people that |
 | **A controlling relative** | To monitor someone through alerts | Both sides consent; alerts carry no content; the protected person sees every alert and can end the link |
 | **Malware sent to the guard** | To run on the server | Nothing is opened, unpacked or run |
@@ -39,7 +39,7 @@ proofs are Project 9's tests, re-run here.
 
 | Project 9 # | Threat | Notes for this project |
 |---|---|---|
-| T1–T3 | Forged, timed or replayed webhooks | Same. On Meta's Cloud API (ADR-002) the signature is Meta's |
+| T1–T3 | Forged, timed or replayed webhooks | Same: WAHA's HMAC-SHA-512, as in Project 9 |
 | T4–T5 | Strangers and floods | Same allow-list in v1 |
 | T7–T9 | One person reaching another's data | Same row-level security |
 | T11 | Someone holding the phone | Same |
@@ -94,14 +94,18 @@ proofs are Project 9's tests, re-run here.
 
 | # | Threat | Control | Proof | Slice |
 |---|---|---|---|---|
-| S21 | Scammers mass-report the number to get it banned | The official Cloud API, where a business account has a quality rating and an appeal path (ADR-002). On WAHA there is no appeal | ADR-002 | 3 |
+| S21 | Scammers mass-report the number to get it banned | **Accepted by Arthur (ADR-002).** No appeal on WAHA. A spare SIM ready to re-link; people are keyed on their own ids, so no new consent is needed | A re-link rehearsal before the gate | 6 |
 | S22 | The guard goes silent and people assume it's still there | Monitoring of the channel (reused); the notice says to call the bank directly when no reply comes | Slice 6 alert test | 6 |
+| S24 | WAHA writes a forwarded APK to disk | Prefer the SHA-256 carried in the message, with no download. Otherwise WAHA's media in a memory-only volume with a short lifetime, never parsed, and the container can't execute from it | The live check; a compose test for the volume | 3 |
+| S25 | The family alert, a bot-started message, speeds a ban | Only to a relative who agreed in a chat with the guard; at most 3 a day; the one exception to the reply-only rule, tested as such | `test_only_alerts_to_consenting_relatives_start_a_message` | 4 |
 | S23 | Someone impersonates the guard | It never sends links except to official domains (iasc.ojk.go.id, cekrekening.id, banks' own sites), and never contacts first except linked alerts | A test over reply templates for links | 3 |
 
 ## Limits we can't remove
 
-- **Meta sees every forwarded message** on the Cloud API, decrypted. The
-  notice says so.
+- **The channel breaks WhatsApp's terms** (ADR-002). It can vanish without
+  warning. The notice says so.
+- **WhatsApp sees who messages the guard, and when.** The server reads
+  every forwarded message.
 - **A rating is a guess.** The wording says so, every time.
 - **Arthur, as operator, could read the ratings table.** It holds no
   message content.

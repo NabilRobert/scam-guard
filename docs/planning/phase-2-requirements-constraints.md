@@ -9,7 +9,8 @@ slices ([slice plan](slice-plan.md)).
 1. **Joining.** Arthur adds a person's number (allow-list, as in Project
    9). They message the guard. It replies with a short notice in
    Indonesian: what it does, that it never says "safe", what it keeps
-   (nothing of the message), who else sees the message (Meta), and that it
+   (nothing of the message), that it runs on an unofficial WhatsApp client that
+   can be banned (so no reply means call the bank directly), and that it
    never contacts anyone first except a relative they link. They type
    `setuju`.
 2. **Checking a message.** They forward "Paket Anda tertahan, lihat foto
@@ -145,10 +146,9 @@ consents and times), `rating` (level, type, rule ids, hashes),
 
 ## Constraints
 
-- **Channel:** ADR-002. Meta's test number for slices 3 and 4.
+- **Channel:** WAHA, settled (ADR-002). A spare SIM for slices 3 and 4.
 - **Money:** $0 for rules and lists. A model needs an approved budget.
-  Meta charges for alerts (utility templates) and service replies past the
-  free tier (ADR-012).
+  WhatsApp bills nothing on WAHA; the risk is a ban (ADR-012).
 - **Capacity:** the same small shared server. No OCR or speech model on it
   until measured (ADR-013).
 - **Order:** after Project 9's deploy, because the channel comes from it.

@@ -9,16 +9,16 @@
 | P3 | The GitHub repo exists | Pushing anything | Arthur |
 | P4 | Free keys: abuse.ch Auth-Key, Google Safe Browsing | Slice 2 | Arthur |
 | P5 | Project 9's channel split into a package, by Project 9's session | Slice 3 | Project 9 |
-| P6 | A Meta developer app with the test number | Slice 3 | Arthur |
+| P6 | A spare SIM, never Arthur's personal number, linked by Arthur to a local WAHA | Slice 3 | Arthur |
 | P7 | Project 9 deployed; the server ready for this data | Slice 6 | Arthur |
-| P8 | A dedicated SIM and Meta's business approval | Slice 6 | Arthur |
+| P8 | A dedicated SIM for the guard, plus a spare to re-link after a ban; a decision on WhatsApp's terms (as Project 9's) | Slice 6 | Arthur |
 | P9 | A model budget and the provider's terms read | Slice 8 | Arthur |
 
 ## Spikes (local, $0)
 
 | # | Question | Method | Pass | Time |
 |---|---|---|---|---|
-| 1 | Meta's current test-number limits, prices, and the alert template's category | Read Meta's own pages and the dashboard | Recorded in ADR-002 and ADR-012 | 1 h |
+| 1 | Does WAHA's GOWS payload carry a forwarded file's SHA-256, name and size without a download? | Read Project 9's live-check notes, then the spare number with an invented file | Recorded in ADR-002; decides S24 | 1 h |
 | 2 | List sizes, per-hash lookup, and PhishTank, OpenPhish and Tranco terms | Read the docs; download nothing large without Arthur's OK | Recorded in ADR-006 | 1 h |
 | 3 | How many scams in the set arrive only as an image or a file? | Count in the set | Decides whether slice 7 moves earlier | 30 min |
 
@@ -33,10 +33,10 @@ rules. Each new test is mutation-checked once. Each slice updates
 | **0. The set** | Repo scaffold (README, CI, complexity rules); the source register; the collection and redaction scripts; the label guide; the public paraphrased set | About 200 scam and 200 normal real rows labelled twice, kappa reported, held-out split frozen and fingerprinted | $0 |
 | **1. Rules baseline (B0)** | Text rules (YAML); link shape checks; file-type rules; the combining rule; the scorer; `docs/accuracy.md` | Held-out scored once; catch and false-alarm rates with intervals published; G3 and G4 tests pass | $0 |
 | **2. Lists (B1)** | Fetch job and local cache for URLhaus, MalwareBazaar, Phishing.Database, Safe Browsing update API; stale-cache fail-closed; file hashing without parsing | B1 scored on the same held-out set with a dated snapshot; no lookup touches the network per message | $0 |
-| **3. Channel** | Project 9's channel as a dependency; Meta Cloud API on the test number; consent; reply wording; `bantuan`; `hapus data saya` | Signed fixtures cover every path; one live round trip on the test number with invented messages; no-content tests pass | $0 |
-| **4. Family alert** | Two-sided linking; alert template; caps; re-confirmation; `berhenti` | Alert tests in the threat model pass; one live alert on the test number | $0 |
+| **3. Channel** | Project 9's channel as a dependency, on WAHA; consent; reply wording; `bantuan`; `hapus data saya` | Signed fixtures cover every path; one live round trip on the spare number with invented messages; no-content tests pass | $0 |
+| **4. Family alert** | Two-sided linking; the alert as the one bot-started message; caps; re-confirmation; `berhenti` | Alert tests in the threat model pass; one live alert on the spare number | $0 |
 | **5. Privacy and operations** | Rating purge; spans; `/healthz` with list ages; threat-model proofs | Every S-row for slices 0 to 5 is Done | $0 |
-| **6. Deploy, gate, dogfood** | Container; probes through systems-monitoring; the real-data gate; Arthur's family for 4 weeks | Gate passes; misses become dev rows (never held-out) | Meta replies and alerts, about Rp10,000 a month; SIM |
+| **6. Deploy, gate, dogfood** | Container; probes through systems-monitoring; the real-data gate; Arthur's family for 4 weeks | Gate passes; misses become dev rows (never held-out) | SIMs only |
 | **7. Screenshots (Should)** | OCR in a capped, offline process; an image set | Image set scored; memory measured under the cap | $0 |
 | **8. Model fallback (Could)** | Redaction; typed output; may-only-raise; Inspect task through the harness's budget guard | B2 scored; no output lowered a level; Arthur's OK for each paid run | Under the approved cap |
 | **9. Voice notes (Could)** | Only if a spike shows whisper.cpp fits | — | $0 to spike |

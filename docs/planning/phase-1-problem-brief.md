@@ -79,7 +79,7 @@ Targets are set **after** the baseline, not before (measurement plan).
 | G3 | Never says "safe" | **0** replies with "aman" or a synonym as a verdict | A test over every reply template |
 | G4 | Never runs what it's sent | **0** code paths that open, unpack or execute an attachment or visit a link | Tests and code review (threat model) |
 | G5 | Keeps no one's messages | **0** message text, images or audio stored by default | A no-content test, as in Project 9 |
-| G6 | The alert reaches the relative | Delivered within a minute in the test, and never carries the message text | Test on Meta's test number |
+| G6 | The alert reaches the relative | Delivered within a minute in the test, and never carries the message text | Test on the spare number |
 | G7 | Costs next to nothing | Rules and lists at $0; a model only within an approved budget | Monthly counts |
 
 ## Non-goals (v1)
@@ -96,8 +96,12 @@ Targets are set **after** the baseline, not before (measurement plan).
 
 ## Decisions
 
-None settled yet. Everything in Phase 5 is a recommendation until Arthur
-agrees. The open questions are at the end of
+Settled with Arthur, 2026-11-03:
+
+1. **Channel:** WAHA, as in Project 9 (ADR-002). The recommendation was
+   Meta's Cloud API; the risk accepted is recorded there.
+
+Everything else in Phase 5 is a recommendation until Arthur agrees. The open questions are at the end of
 [Phase 5](phase-5-architecture-decisions.md#open-questions).
 
 ## Cost of doing nothing

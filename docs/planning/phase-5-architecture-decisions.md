@@ -5,7 +5,7 @@ until Arthur agrees. Settled ones will be marked with the date. The summary
 table, the first slice and the open questions are at the end.
 
 ```
-Person forwards ─► WhatsApp ─► Meta Cloud API ─► channel (Project 9's adapter) ─► guard (FastAPI)
+Person forwards ─► WhatsApp ─► WAHA (GOWS, loopback) ─► channel (Project 9's adapter) ─► guard (FastAPI)
                                                                                     │
                      text rules (YAML) ─────────────────────────────────────────────┤  $0
                      link checks, no visiting ──► local list cache ◄── fetch job    │  $0
@@ -52,47 +52,45 @@ both.
 **Why:** real use with real scams, without public sign-up, a verified
 business or a support load.
 
-**Rejected:** *public from day one:* a support and abuse load, and Meta's
-messaging limits for unverified businesses. *Arthur only:* the family
+**Rejected:** *public from day one:* a support and abuse load, and on WAHA
+more traffic means a faster ban. *Arthur only:* the family
 alert can't be tested alone.
 
-## ADR-002: The channel: Meta's official Cloud API, not WAHA
+## ADR-002: The channel: WAHA, as in Project 9 (settled)
 
-**Recommendation:** Meta's WhatsApp Cloud API for anything real. Project
-9's adapter keeps WAHA usable for local spikes with invented messages only.
+**Decision (settled by Arthur, 2026-11-03):** WAHA with the GOWS engine,
+behind Project 9's adapter, the same as Project 9's ADR-022. The
+recommendation was Meta's Cloud API; Arthur chose WAHA. The reasoning for
+both stays here, because the risk taken is part of the record.
 
-**Why Project 9's choice doesn't carry over.** Project 9 moved to WAHA
-because Meta's approval is harder, and accepted the ban risk for a private
-ledger whose records live in Postgres. A scam guard is different on four
-points:
+**The recommendation, and why it lost.** A scam guard differs from a
+ledger on four points. Arthur accepted all four:
 
-| Point | Project 9 (ledger) | Project 12 (scam guard) |
-|---|---|---|
-| **What a ban costs** | Replies stop; records are safe in Postgres | Protection stops silently. People keep forwarding to a dead number, or stop checking, at the moment a scam arrives |
-| **Who wants it banned** | No one | **Scammers do.** Mass-reporting a number is cheap. On WAHA there's no appeal, and WhatsApp may disable accounts "anytime for any reason" |
-| **Starting conversations** | Never: the summary moved into replies | **The family alert must start a conversation** with the relative. WAHA's own guidance says a bot should never do that, and Project 9's reply-only rule (T41) forbids it. On the Cloud API it's an opted-in utility template |
-| **Who pays later** | No one | Banks and telcos (ADR-014) won't touch a product that breaks WhatsApp's terms |
+| Point | Project 9 (ledger) | Project 12 (scam guard) | Accepted handling |
+|---|---|---|---|
+| **What a ban costs** | Replies stop; records are safe in Postgres | Protection stops silently, when a scam may be arriving | The notice says: no reply within a minute means call the bank directly. Channel monitoring alerts Arthur (S22). Ratings and links stay in Postgres, so a new number needs no new consent |
+| **Who wants it banned** | No one | Scammers, by mass-reporting the number. No appeal on WAHA | Accepted. A spare SIM is ready to re-link |
+| **Starting conversations** | Never | **The family alert starts one** with the relative. WAHA's guidance says a bot shouldn't | Only to a relative who agreed in a chat with the guard (`setuju jaga`), at most 3 a day, level and type only (ADR-009). The single exception to Project 9's reply-only rule (T41), tested as such |
+| **Who pays later** | No one | Banks and telcos won't accept an unofficial client | Moving to the Cloud API is a gate before any sale. The adapter keeps that door open |
 
-**What the Cloud API costs:**
-- Meta's approval and business verification, the reason Project 9 left.
-  Meta's test number (free, up to 5 recipients by third-party docs; spike
-  1 confirms) covers slices 3 and 4, so the build doesn't wait.
-- Money: alerts are utility templates, and service replies past 1,000 a
-  month are paid (ADR-012). Small at family scale.
-- **Meta reads every message,** decrypted. The notice says so.
-
-**Meta's terms (from Project 9's reading, 2026-10-30; re-read in spike 1):**
-
-| Clause | Risk here | Handling |
-|---|---|---|
-| **4.7, AI providers** | Barred when AI is the primary function, and Meta decides | Rules and lists are the product; the model is an off-by-default fallback. **Not marketed as "AI"** |
-| **4.2, Prohibited Information** | Forwarded messages may hold data the law protects | Nothing stored (ADR-008). Still a question for a lawyer, not settled here |
-| **Business Messaging Policy** | No requesting full card, account or ID numbers; opt-in; a path to a human | The guard never asks for them, and warns when it sees one (PR3); `setuju`; `bantuan` |
-| **"Company"** | The terms address companies | Same as Project 9's open question |
+**What WAHA changes from a Cloud API plan:**
+- **WhatsApp's terms are broken,** as in Project 9 ("bulk messaging,
+  auto-messaging", "non-personal use", reverse engineering). Same open
+  question as Project 9's, and it gates real use.
+- **Meta no longer reads the text,** by WhatsApp's own description; the
+  server does. Unverified, as in Project 9.
+- **No Meta prices, templates or test number.** The cost is a SIM.
+- **Attachments:** WhatsApp's media messages carry the file's SHA-256 in
+  the message itself. If WAHA passes it through on GOWS, the guard can look
+  up an APK **without downloading it**. The live check confirms this. If
+  not, WAHA's media download is kept in a memory-only volume with a short
+  lifetime, and never parsed (S24).
+- **Identity:** `@lid` or `@c.us`, as in Project 9's ADR-022.
+- **No buttons:** typed words, as in Project 9.
 
 **Rejected:**
-- *WAHA in production:* the four points above. Kept only behind the adapter
-  for local work.
+- *Meta's Cloud API (the recommendation):* Arthur's call; approval is
+  harder, as Project 9 found.
 - *Telegram:* families in Indonesia are on WhatsApp.
 - *Twilio or another official provider:* Meta's approval plus a fee.
 - *A web form:* the point is to check where the message arrives.
@@ -192,7 +190,7 @@ no permission.
 - Measured with Inspect AI on the dev and held-out sets; paid runs go
   through the harness's budget guard.
 - The provider's written terms must say inputs aren't used for training
-  (Meta's 4.7 forbids it).
+  (as Project 9's ADR-007 requires).
 
 **Rejected:** *model first:* cost on every message, and every forwarded
 message sent to a provider. *A model that can lower:* the attack surface.
@@ -216,7 +214,8 @@ message sent to a provider. *A model that can lower:* the attack surface.
 
 | Who | Sees | Keeps |
 |---|---|---|
-| Meta | Every forwarded message, decrypted | Up to 30 days, per its docs (Project 9's reading) |
+| WhatsApp (Meta) | Who messages the guard, and when. Text is end-to-end encrypted to the WAHA session, by WhatsApp's description (unverified) | — |
+| WAHA's session on the server | Every message, readable | Session files only; media per S24 |
 | The guard's server | The message, in memory | Ratings only |
 | List providers | Nothing, except Safe Browsing hash prefixes | — |
 | Model provider (if on) | One redacted message | Per its terms |
@@ -237,7 +236,9 @@ for a gain the donation step gives with consent.
   summary.
 - The protected person is told each time an alert is sent.
 - Links are re-confirmed every 90 days.
-- On the Cloud API, an alert is a utility template, approved by Meta.
+- On WAHA (ADR-002), an alert is the one message the guard starts. It goes
+  only to a relative who has agreed in a chat with the guard, so the chat
+  already exists.
 
 **Why:** the family alert is the angle, and also the most sensitive part:
 done wrong, it's a monitoring tool. Consent on both sides and no content
@@ -277,11 +278,9 @@ libraries, each needing Arthur's OK:**
 | Item | Cost | Notes |
 |---|---|---|
 | Rules, lists, CI | $0 | Free keys for abuse.ch and Google |
-| Meta service replies | Free for the first 1,000 a month per number, then Rp356.65 each | Project 9's reading, 2026-10-30; re-read in spike 1 |
-| Family alerts (utility templates) | Rp356.65 each | 10 people, 2 alerts a month each: about Rp7,100 a month |
-| Meta test number | $0 | Slices 3 and 4 |
+| WhatsApp replies and alerts | $0 on WAHA (ADR-002) | The cost is a ban, not a bill: caps and rate limits instead |
 | Model fallback | **$0 until approved.** Proposal: a hard cap of $1 a month | Cents at family scale; each paid eval run needs Arthur's OK |
-| SIM for the business number | A SIM | Never a personal number |
+| SIMs | A dedicated SIM, plus a spare to re-link after a ban | Never a personal number |
 
 **Rejected:** *no cap:* a loop or a flood could cost money unseen.
 
@@ -325,7 +324,7 @@ real-data gate; one independent review before the gate.
 | # | Decision | Rejected | Status |
 |---|---|---|---|
 | 001 | Arthur's family, up to 10, by invitation | Public; Arthur only | Recommended |
-| 002 | Meta's Cloud API; WAHA only for local spikes | WAHA in production, Telegram, Twilio, web form | Recommended |
+| 002 | WAHA with GOWS behind Project 9's adapter; alerts the one bot-started message | Meta's Cloud API (recommended), Telegram, Twilio, web form | **Settled 2026-11-03** |
 | 003 | Depend on Project 9's channel, split out by its session | Copying it, a new channel | Recommended |
 | 004 | Three levels, never "safe"; fixed wording pointing to the bank and IASC | Scores, two levels, "probably safe" | Recommended |
 | 005 | Never visit links or open files; unknown is TINGGI | Sandboxes, HEAD requests, VirusTotal uploads | Recommended |
@@ -350,7 +349,7 @@ downloads. See the [slice plan](slice-plan.md).
 ## Open questions
 
 **For Arthur, one at a time:**
-1. **Channel (ADR-002):** Meta's Cloud API, against Project 9's WAHA?
+1. ~~**Channel (ADR-002)**~~: settled 2026-11-03, WAHA.
 2. **The real set:** OK to keep real messages private in `data/real/`, and
    to use the two unlicensed SMS datasets privately?
 3. **Second labeller:** who labels `label_b`?
@@ -360,12 +359,12 @@ downloads. See the [slice plan](slice-plan.md).
 6. **Name (ADR-015).**
 7. **Model budget (ADR-012):** later, after the baseline.
 
-**For the spikes:** Meta's current test-number limits and prices;
+**For the spikes:** whether WAHA's GOWS payload carries a file's SHA-256;
 abuse.ch list sizes and per-hash lookup; PhishTank, OpenPhish and Tranco
 terms.
 
 **For a lawyer, before any paid plan:** liability wording; UU PDP and
-forwarded third-party data; Meta's 4.2.
+forwarded third-party data; WhatsApp's terms.
 
 ## Sources (read 2026-11-03)
 
@@ -381,12 +380,11 @@ forwarded third-party data; Meta's 4.2.
 [SpamShield dataset](https://huggingface.co/datasets/M-Arjun/SpamShield-Datasets) ·
 [nadyatyandra/IndonesianSMSSpamDetector](https://github.com/nadyatyandra/IndonesianSMSSpamDetector) ·
 [ekaputra07/ina-sms-classifier](https://github.com/ekaputra07/ina-sms-classifier) ·
-Project 9's Phase 5 and threat model (Meta's terms and prices, WAHA)
+Project 9's Phase 5 (ADR-022) and threat model (WAHA, WhatsApp's terms)
 
 **Secondary, used only where marked:**
 [Kontan: IASC reports to September 2026](https://keuangan.kontan.co.id/news/iasc-terima-702342-laporan-kasus-penipuan-hingga-september-2026) ·
 [Kontan: losses to January 2026](https://keuangan.kontan.co.id/news/hingga-14-januari-2026-kerugian-masyarakat-akibat-penipuan-scam-rp-91-triliun) ·
 [Antara: report only at iasc.ojk.go.id](https://www.antaranews.com/berita/4743805/satgas-pasti-waspadai-penipuan-website-mengatasnamakan-iasc/) ·
 [Bisnis: Tria Stealer wedding-invitation APK](https://teknologi.bisnis.com/read/20250201/84/1835932/terungkap-modus-malware-tria-stealer-curi-data-lewat-undangan-pernikahan-palsu) ·
-[DJPb: invitation and parcel APK scams](https://djpb.kemenkeu.go.id/kppn/wates/id/data-publikasi/berita-terbaru/3069-phising-penipuan-undangan-apk-paket.html) ·
-[WANotifier: test number limits](https://help.wanotifier.com/en/article/test-phone-number-limitations-kt0ly2/)
+[DJPb: invitation and parcel APK scams](https://djpb.kemenkeu.go.id/kppn/wates/id/data-publikasi/berita-terbaru/3069-phising-penipuan-undangan-apk-paket.html)
